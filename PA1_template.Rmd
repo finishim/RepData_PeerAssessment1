@@ -8,7 +8,18 @@ output:
 
 ## Loading and preprocessing the data
 
+Unzip the file first, if the unzipped file is not already in the working directory.
+```{r echo = TRUE}
+if(!file.exists('activity.csv')){
+    unzip('activity.zip')
+}
 
+#read the table
+activity <- read.csv("activity.csv", stringsAsFactors=FALSE, na.strings="NA")
+
+#change the date column's class from string to Date
+activity[,"date"] <- as.Date(activity[,"date"],format='%Y-%m-%d')
+```
 
 ## What is mean total number of steps taken per day?
 
