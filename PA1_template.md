@@ -1,43 +1,53 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-author: "Nazmi Anik"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
+Nazmi Anik  
 
 
 ## Loading and preprocessing the data  
 
 1. Unzip the file first, if the unzipped file is not already in the working directory.  
-```{r, echo = TRUE}
+
+```r
 if(!file.exists('activity.csv')){
     unzip('activity.zip')
 }
 ```
 
 2. Load the data ( i.e. read.csv() )  
-```{r, echo = TRUE}
+
+```r
 #read the table
 activity <- read.csv("activity.csv", stringsAsFactors=FALSE, na.strings="NA")
 ```
 
 3. Process/transform the data (if necessary) into a format suitable for your analysis  
-```{r, echo = TRUE}
+
+```r
 #change the date column's class from string to Date
 activity[,"date"] <- as.Date(activity[,"date"],format='%Y-%m-%d')
 #display the first few rows
 head(activity)
 ```
 
+```
+##   steps       date interval
+## 1    NA 2012-10-01        0
+## 2    NA 2012-10-01        5
+## 3    NA 2012-10-01       10
+## 4    NA 2012-10-01       15
+## 5    NA 2012-10-01       20
+## 6    NA 2012-10-01       25
+```
+
 ## What is mean total number of steps taken per day?  
 
 1. Calculate the total number of steps taken per day  
-```{r, message=FALSE}
+
+```r
 #import dplyr library
 library(dplyr)
 ```
-```{r, echo=TRUE}
+
+```r
 #group the activity table by day
 activityDay <- group_by(activity, date)
 #summarize this grouped table with the sum of steps for each day
@@ -48,14 +58,29 @@ stepDay <- na.omit(stepDay)
 head(stepDay)
 ```
 
-2. Make a histogram of the total number of steps taken each day  
-```{r, echo=TRUE}
-hist(stepDay$steps_by_day, main="Number of Steps Taken Each Day", xlab="Number of Steps per Day", ylab="Frequency", col = "red")
-    
+```
+## Source: local data frame [6 x 2]
+## 
+##         date steps_by_day
+## 1 2012-10-02          126
+## 2 2012-10-03        11352
+## 3 2012-10-04        12116
+## 4 2012-10-05        13294
+## 5 2012-10-06        15420
+## 6 2012-10-07        11015
 ```
 
+2. Make a histogram of the total number of steps taken each day  
+
+```r
+hist(stepDay$steps_by_day, main="Number of Steps Taken Each Day", xlab="Number of Steps per Day", ylab="Frequency", col = "red")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
+
 3. Calculate and report the mean and median of the total number of steps taken per day
-```{r histogram, echo=TRUE, fig.height=6, fig.width=8}
+
+```r
 #take the mean and median from the summed column
 stepDayMean <- mean(stepDay$steps_by_day)
 stepDayMedian <- median(stepDay$steps_by_day)
