@@ -30,7 +30,7 @@ activity[,"date"] <- as.Date(activity[,"date"],format='%Y-%m-%d')
 ## What is mean total number of steps taken per day?  
 
 1. Calculate the total number of steps taken per day  
-```{r echo = TRUE}
+```{r,echo=TRUE}
 library(dplyr)
 #group the activity table by day
 activityDay <- group_by(activity, date)
@@ -41,13 +41,13 @@ stepDay <- na.omit(stepDay)
 ```
 
 2. Make a histogram of the total number of steps taken each day  
-```{r echo = TRUE}
+```{r,echo=TRUE}
 hist(stepDay$steps_by_day, main="Number of Steps Taken Each Day", xlab="Number of Steps per Day", ylab="Frequency", col = "red")
     
 ```
 
 3. Calculate and report the mean and median of the total number of steps taken per day
-```{r echo = TRUE}
+```{r histogram,echo=TRUE, fig.height=6, fig.width=8}
 #take the mean and median from the summed column
 stepDayMean <- mean(stepDay$steps_by_day)
 stepDayMedian <- median(stepDay$steps_by_day)
