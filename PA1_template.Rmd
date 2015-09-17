@@ -6,7 +6,7 @@ output:
 ---
 
 
-## Loading and preprocessing the data
+## Loading and preprocessing the data  
 
 1. Unzip the file first, if the unzipped file is not already in the working directory.  
 ```{r echo = TRUE}
@@ -15,28 +15,37 @@ if(!file.exists('activity.csv')){
 }
 ```
 
-2. Read the table.  
+2. Load the data (i.e. read.csv() )  
 ```{r echo = TRUE}
 #read the table
 activity <- read.csv("activity.csv", stringsAsFactors=FALSE, na.strings="NA")
 ```
 
-3.  Update the column class to proper formats.  
+3. Process/transform the data (if necessary) into a format suitable for your analysis  
 ```{r echo = TRUE}
 #change the date column's class from string to Date
 activity[,"date"] <- as.Date(activity[,"date"],format='%Y-%m-%d')
 ```
 
-## What is mean total number of steps taken per day?
+## What is mean total number of steps taken per day?  
+
+1. Calculate the total number of steps taken per day  
+```{r echo = TRUE}
+library(dplyr)
+activityDay <- group_by(activity, date)
+stepDay <- summarize(activityDay, steps_by_day = sum(steps))
+#For this part of the assignment, you can ignore the missing values in the dataset.
+stepDay <- na.omit(stepDay)
+```
+
+Remove the NA's
+
+## What is the average daily activity pattern?  
 
 
 
-## What is the average daily activity pattern?
+## Imputing missing values  
 
 
 
-## Imputing missing values
-
-
-
-## Are there differences in activity patterns between weekdays and weekends?
+## Are there differences in activity patterns between weekdays and weekends?  
