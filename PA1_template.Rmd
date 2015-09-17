@@ -15,7 +15,7 @@ if(!file.exists('activity.csv')){
 }
 ```
 
-2. Load the data (i.e. read.csv() )  
+2. Load the data ( i.e. read.csv() )  
 ```{r echo = TRUE}
 #read the table
 activity <- read.csv("activity.csv", stringsAsFactors=FALSE, na.strings="NA")
@@ -32,13 +32,28 @@ activity[,"date"] <- as.Date(activity[,"date"],format='%Y-%m-%d')
 1. Calculate the total number of steps taken per day  
 ```{r echo = TRUE}
 library(dplyr)
+#group the activity table by day
 activityDay <- group_by(activity, date)
+#summarize this grouped table with the sum of steps for each day
 stepDay <- summarize(activityDay, steps_by_day = sum(steps))
 #For this part of the assignment, you can ignore the missing values in the dataset.
 stepDay <- na.omit(stepDay)
 ```
 
-Remove the NA's
+2. Make a histogram of the total number of steps taken each day  
+```{r echo = TRUE}
+hist(stepDay$steps_by_day, main="Number of Steps Taken Each Day", xlab="Number of Steps per Day", ylab="Frequency", col = "red")
+    
+```
+
+3. Calculate and report the mean and median of the total number of steps taken per day
+```{r echo = TRUE}
+#take the mean and median from the summed column
+stepDayMean <- mean(stepDay$steps_by_day)
+stepDayMedian <- median(stepDay$steps_by_day)
+```
+The mean total number of steps taken per day: 10766.1886792453  
+The median total number of steps taken per day: 10765  
 
 ## What is the average daily activity pattern?  
 
