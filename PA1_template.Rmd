@@ -66,8 +66,12 @@ stepDayMedian <- median(stepDay$steps_by_day)
 
 1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)  
 ```{r, echo=TRUE}
-    
+#average number of steps taken (mean) within each interval
+stepInterval <- tapply(activity$steps, activity$interval, mean, na.rm = TRUE)
+#plot
+plot(stepInterval, type="l", xlab="5-min Interval", ylab="Av Num of Steps", main = "Average Number of Steps Taken", col = "blue")
 ```
+
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?  
 ```{r, echo=TRUE}
     

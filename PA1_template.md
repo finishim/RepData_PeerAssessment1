@@ -86,10 +86,22 @@ stepDayMean <- mean(stepDay$steps_by_day)
 stepDayMedian <- median(stepDay$steps_by_day)
 ```
 **The mean total number of steps taken per day**: 10766.1886792453  
-**The median total number of steps taken per day**: 10765  
+**The median total number of steps taken per day**: 10765   
 
 ## What is the average daily activity pattern?  
 
+1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)  
+
+```r
+#average number of steps taken (mean) within each interval
+stepInterval <- tapply(activity$steps, activity$interval, mean, na.rm = TRUE)
+#plot
+plot(stepInterval, type="l", xlab="5-min Interval", ylab="Av Num of Steps", main = "Average Number of Steps Taken", col = "blue")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-7-1.png) 
+
+2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?  
 
 
 ## Imputing missing values  
