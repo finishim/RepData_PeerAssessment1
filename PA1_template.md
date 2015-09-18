@@ -116,6 +116,26 @@ stepIntervalOrdered[1,]
 
 ## Imputing missing values  
 
+1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)  
+
+```r
+numNA <- sapply(activity, function(x) sum(is.na(x)))
+numNA[[1]]
+```
+
+```
+## [1] 2304
+```
+Source for the code is [here](http://stackoverflow.com/questions/8317231/elegant-way-to-report-missing-values-in-a-data-frame)
+**Total number of rows with NA:** 2304  
+
+2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.  
+
+
+3. Create a new dataset that is equal to the original dataset but with the missing data filled in.  
+
+
+4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?  
 
 
 ## Are there differences in activity patterns between weekdays and weekends?  

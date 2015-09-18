@@ -83,8 +83,11 @@ stepIntervalOrdered[1,]
 
 1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)  
 ```{r, echo=TRUE}
-
+numNA <- sapply(activity, function(x) sum(is.na(x)))
+numNA[[1]]
 ```
+Source for the code is [here](http://stackoverflow.com/questions/8317231/elegant-way-to-report-missing-values-in-a-data-frame)  
+**Total number of rows with NA:** 2304  
 
 2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.  
 ```{r, echo=TRUE}
