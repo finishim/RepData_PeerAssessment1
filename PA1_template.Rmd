@@ -150,9 +150,24 @@ The median value changed slightly from the original. It now equals the mean valu
 ###1. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.  
 ```{r, echo=TRUE}
 #mutate the data frame, adding a new column that shows the day of the week
-activityImputed <- mutate(activityImputed, weekday=weekdays(date))
-#change the chr class of the weekday column to factor class
-activityImputed$weekday <- as.factor(activityImputed$weekday)
+activityImputed <- mutate(activityImputed, day=weekdays(date))
+#change the chr class of the day column to factor class
+activityImputed$day <- as.factor(activityImputed$day)
+#figure out which days are weekdays, which are weekend days
+for (i in 1:nrow(activityImputed)) {
+    if (activityImputed$day[i] == "Saturday") {
+        activityImputed$dayType[i] <- "Weekend"
+        }
+    else if (activityImputed$day[i] == "Sunday") {
+        activityImputed$dayType[i] <- "Weekend"
+        } 
+    else {
+        activityImputed$dayType[i] <- "Weekday"
+    }
+}
+#change the chr class of the dayType column to factor class
+activityImputed$dayType <- as.factor(activityImputed$dayType)
+#view a summary of the data frame to confirm changesw and new columns
 head(activityImputed)
 str(activityImputed)
 ```

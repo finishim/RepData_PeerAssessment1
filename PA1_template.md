@@ -243,20 +243,35 @@ The median value changed slightly from the original. It now equals the mean valu
 
 ```r
 #mutate the data frame, adding a new column that shows the day of the week
-activityImputed <- mutate(activityImputed, weekday=weekdays(date))
-#change the chr class of the weekday column to factor class
-activityImputed$weekday <- as.factor(activityImputed$weekday)
+activityImputed <- mutate(activityImputed, day=weekdays(date))
+#change the chr class of the day column to factor class
+activityImputed$day <- as.factor(activityImputed$day)
+#figure out which days are weekdays, which are weekend days
+for (i in 1:nrow(activityImputed)) {
+    if (activityImputed$day[i] == "Saturday") {
+        activityImputed$dayType[i] <- "Weekend"
+        }
+    else if (activityImputed$day[i] == "Sunday") {
+        activityImputed$dayType[i] <- "Weekend"
+        } 
+    else {
+        activityImputed$dayType[i] <- "Weekday"
+    }
+}
+#change the chr class of the dayType column to factor class
+activityImputed$dayType <- as.factor(activityImputed$dayType)
+#view a summary of the data frame to confirm changesw and new columns
 head(activityImputed)
 ```
 
 ```
-##       steps       date interval weekday
-## 1 1.7169811 2012-10-01        0  Monday
-## 2 0.3396226 2012-10-01        5  Monday
-## 3 0.1320755 2012-10-01       10  Monday
-## 4 0.1509434 2012-10-01       15  Monday
-## 5 0.0754717 2012-10-01       20  Monday
-## 6 2.0943396 2012-10-01       25  Monday
+##       steps       date interval    day dayType
+## 1 1.7169811 2012-10-01        0 Monday Weekday
+## 2 0.3396226 2012-10-01        5 Monday Weekday
+## 3 0.1320755 2012-10-01       10 Monday Weekday
+## 4 0.1509434 2012-10-01       15 Monday Weekday
+## 5 0.0754717 2012-10-01       20 Monday Weekday
+## 6 2.0943396 2012-10-01       25 Monday Weekday
 ```
 
 ```r
@@ -264,11 +279,12 @@ str(activityImputed)
 ```
 
 ```
-## 'data.frame':	17568 obs. of  4 variables:
+## 'data.frame':	17568 obs. of  5 variables:
 ##  $ steps   : num  1.717 0.3396 0.1321 0.1509 0.0755 ...
 ##  $ date    : Date, format: "2012-10-01" "2012-10-01" ...
 ##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
-##  $ weekday : Factor w/ 7 levels "Friday","Monday",..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ day     : Factor w/ 7 levels "Friday","Monday",..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ dayType : Factor w/ 2 levels "Weekday","Weekend": 1 1 1 1 1 1 1 1 1 1 ...
 ```
 
 ###2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.  
