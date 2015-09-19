@@ -104,7 +104,9 @@ plot(stepInterval, type="l", xlab="5-min Interval", ylab="Av Num of Steps", main
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?  
 
 ```r
+#sort the data frame
 stepIntervalOrdered <- arrange(stepInterval, desc(stepMean))
+#top of the data frame has the max number of steps
 stepIntervalOrdered[1,]
 ```
 
@@ -119,18 +121,65 @@ stepIntervalOrdered[1,]
 1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)  
 
 ```r
+#for each column, take sum of is.na()
 numNA <- sapply(activity, function(x) sum(is.na(x)))
+#first columns sum is the number of missing values in the dataset
 numNA[[1]]
 ```
 
 ```
 ## [1] 2304
 ```
-Source for the code is [here](http://stackoverflow.com/questions/8317231/elegant-way-to-report-missing-values-in-a-data-frame)
+Source for the code is [here](http://stackoverflow.com/questions/8317231/elegant-way-to-report-missing-values-in-a-data-frame)  
 **Total number of rows with NA:** 2304  
 
 2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.  
 
+```r
+#create new data frame
+activityImputed <- activity
+#loop in the original data frame
+for (i in 1:nrow(activity)){
+    #when na value is encountered
+    if (is.na(activity$steps[i])){
+        #store the interval where na value was encountered
+        intervalNum <- activity$interval[i]
+        #store the row number that corresponds to that interval in the data frame with mean of steps per interval
+        rowNum <- which(stepInterval$interval == intervalNum)
+        #get the mean step value over the interval we encountered the na
+        stepMean <- stepInterval$stepMean[rowNum]
+        #replace the na with that mean step value
+        activityImputed$steps[i] <- stepMean
+        }
+    }
+#compare
+head(activity)
+```
+
+```
+##   steps       date interval
+## 1    NA 2012-10-01        0
+## 2    NA 2012-10-01        5
+## 3    NA 2012-10-01       10
+## 4    NA 2012-10-01       15
+## 5    NA 2012-10-01       20
+## 6    NA 2012-10-01       25
+```
+
+```r
+head(activityImputed)
+```
+
+```
+##       steps       date interval
+## 1 1.7169811 2012-10-01        0
+## 2 0.3396226 2012-10-01        5
+## 3 0.1320755 2012-10-01       10
+## 4 0.1509434 2012-10-01       15
+## 5 0.0754717 2012-10-01       20
+## 6 2.0943396 2012-10-01       25
+```
+The missing values are replaced with mean step value for the 5-minute interval.  
 
 3. Create a new dataset that is equal to the original dataset but with the missing data filled in.  
 
