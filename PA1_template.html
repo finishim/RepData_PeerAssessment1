@@ -230,6 +230,30 @@ stepDayMedianI</code></pre>
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
+<div id="create-a-new-factor-variable-in-the-dataset-with-two-levels---weekday-and-weekend-indicating-whether-a-given-date-is-a-weekday-or-weekend-day." class="section level3">
+<h3>1. Create a new factor variable in the dataset with two levels - “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.</h3>
+<pre class="r"><code>#mutate the data frame, adding a new column that shows the day of the week
+activityImputed &lt;- mutate(activityImputed, weekday=weekdays(date))
+#change the chr class of the weekday column to factor class
+activityImputed$weekday &lt;- as.factor(activityImputed$weekday)
+head(activityImputed)</code></pre>
+<pre><code>##       steps       date interval weekday
+## 1 1.7169811 2012-10-01        0  Monday
+## 2 0.3396226 2012-10-01        5  Monday
+## 3 0.1320755 2012-10-01       10  Monday
+## 4 0.1509434 2012-10-01       15  Monday
+## 5 0.0754717 2012-10-01       20  Monday
+## 6 2.0943396 2012-10-01       25  Monday</code></pre>
+<pre class="r"><code>str(activityImputed)</code></pre>
+<pre><code>## 'data.frame':    17568 obs. of  4 variables:
+##  $ steps   : num  1.717 0.3396 0.1321 0.1509 0.0755 ...
+##  $ date    : Date, format: &quot;2012-10-01&quot; &quot;2012-10-01&quot; ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ weekday : Factor w/ 7 levels &quot;Friday&quot;,&quot;Monday&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...</code></pre>
+</div>
+<div id="make-a-panel-plot-containing-a-time-series-plot-i.e.type-l-of-the-5-minute-interval-x-axis-and-the-average-number-of-steps-taken-averaged-across-all-weekday-days-or-weekend-days-y-axis.-see-the-readme-file-in-the-github-repository-to-see-an-example-of-what-this-plot-should-look-like-using-simulated-data." class="section level3">
+<h3>2. Make a panel plot containing a time series plot (i.e. type = “l”) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.</h3>
+</div>
 </div>
 
 

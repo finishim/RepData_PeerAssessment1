@@ -238,3 +238,38 @@ The mean value stayed the same as expected, since we used the mean values to fil
 The median value changed slightly from the original. It now equals the mean value.  
 
 ## Are there differences in activity patterns between weekdays and weekends?  
+
+###1. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.  
+
+```r
+#mutate the data frame, adding a new column that shows the day of the week
+activityImputed <- mutate(activityImputed, weekday=weekdays(date))
+#change the chr class of the weekday column to factor class
+activityImputed$weekday <- as.factor(activityImputed$weekday)
+head(activityImputed)
+```
+
+```
+##       steps       date interval weekday
+## 1 1.7169811 2012-10-01        0  Monday
+## 2 0.3396226 2012-10-01        5  Monday
+## 3 0.1320755 2012-10-01       10  Monday
+## 4 0.1509434 2012-10-01       15  Monday
+## 5 0.0754717 2012-10-01       20  Monday
+## 6 2.0943396 2012-10-01       25  Monday
+```
+
+```r
+str(activityImputed)
+```
+
+```
+## 'data.frame':	17568 obs. of  4 variables:
+##  $ steps   : num  1.717 0.3396 0.1321 0.1509 0.0755 ...
+##  $ date    : Date, format: "2012-10-01" "2012-10-01" ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ weekday : Factor w/ 7 levels "Friday","Monday",..: 2 2 2 2 2 2 2 2 2 2 ...
+```
+
+###2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.  
+
