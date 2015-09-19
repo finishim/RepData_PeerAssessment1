@@ -212,7 +212,7 @@ activityDayI <- group_by(activityImputed, date)
 #summarize this grouped table with the sum of steps for each day
 stepDayI <- summarize(activityDayI, steps_by_day = sum(steps))
 #create the histogram
-hist(stepDay$steps_by_day, main="Number of Steps Taken Each Day", xlab="Number of Steps per Day", ylab="Frequency", col = "blue")
+hist(stepDayI$steps_by_day, main="Number of Steps Taken Each Day (imputed)", xlab="Number of Steps per Day", ylab="Frequency", col = "blue")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
