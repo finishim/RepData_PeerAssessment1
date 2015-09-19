@@ -173,6 +173,16 @@ str(activityImputed)
 ```
 
 ###2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.  
+```{r, message=FALSE}
+#import ggplot library
+library(ggplot2)
+```
 ```{r, echo=TRUE}
+#
+stepDayTypeImputed2 <- aggregate(x=activityImputed$steps, by=list(activityImputed$interval,activityImputed$dayType), data=activityImputed, FUN=mean)
+#group the activity table by day type and interval
+activityDayTypeImputed <- group_by(activityImputed, dayType, interval)
+#summarize this grouped table with the mean of steps for each day type and interval
+stepDayTypeImputed <- summarize(activityDayTypeImputed, steps_by_interval = mean(steps))
 
 ```
