@@ -137,6 +137,12 @@ activityDayI <- group_by(activityImputed, date)
 stepDayI <- summarize(activityDayI, steps_by_day = sum(steps))
 #create the histogram
 hist(stepDayI$steps_by_day, main="Number of Steps Taken Each Day (imputed)", xlab="Number of Steps per Day", ylab="Frequency", col = "blue")
+stepDayMeanI <- mean(stepDayI$steps_by_day)
+stepDayMeanI
+stepDayMedianI <- median(stepDayI$steps_by_day)
+stepDayMedianI
 ```
+The mean value stayed the same as expected, since we used the mean values to fill in missing data.  
+The median value changed slightly from the original. It now equals the mean value.  
 
 ## Are there differences in activity patterns between weekdays and weekends?  

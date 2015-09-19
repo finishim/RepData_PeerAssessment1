@@ -217,4 +217,24 @@ hist(stepDayI$steps_by_day, main="Number of Steps Taken Each Day (imputed)", xla
 
 ![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
 
+```r
+stepDayMeanI <- mean(stepDayI$steps_by_day)
+stepDayMeanI
+```
+
+```
+## [1] 10766.19
+```
+
+```r
+stepDayMedianI <- median(stepDayI$steps_by_day)
+stepDayMedianI
+```
+
+```
+## [1] 10766.19
+```
+The mean value stayed the same as expected, since we used the mean values to fill in missing data.  
+The median value changed slightly from the original. It now equals the mean value.  
+
 ## Are there differences in activity patterns between weekdays and weekends?  
