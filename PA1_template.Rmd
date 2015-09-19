@@ -9,20 +9,20 @@ output:
 
 ## Loading and preprocessing the data  
 
-1. Unzip the file first, if the unzipped file is not already in the working directory.  
+###1. Unzip the file first, if the unzipped file is not already in the working directory.  
 ```{r, echo = TRUE}
 if(!file.exists('activity.csv')){
     unzip('activity.zip')
 }
 ```
 
-2. Load the data ( i.e. read.csv() )  
+###2. Load the data ( i.e. read.csv() )  
 ```{r, echo = TRUE}
 #read the table
 activity <- read.csv("activity.csv", stringsAsFactors=FALSE, na.strings="NA")
 ```
 
-3. Process/transform the data (if necessary) into a format suitable for your analysis  
+###3. Process/transform the data (if necessary) into a format suitable for your analysis  
 ```{r, echo = TRUE}
 #change the date column's class from string to Date
 activity[,"date"] <- as.Date(activity[,"date"],format='%Y-%m-%d')
@@ -32,7 +32,7 @@ head(activity)
 
 ## What is mean total number of steps taken per day?  
 
-1. Calculate the total number of steps taken per day  
+###1. Calculate the total number of steps taken per day  
 ```{r, message=FALSE}
 #import dplyr library
 library(dplyr)
@@ -48,23 +48,26 @@ stepDay <- na.omit(stepDay)
 head(stepDay)
 ```
 
-2. Make a histogram of the total number of steps taken each day  
+###2. Make a histogram of the total number of steps taken each day  
 ```{r, echo=TRUE}
+#create the histogram
 hist(stepDay$steps_by_day, main="Number of Steps Taken Each Day", xlab="Number of Steps per Day", ylab="Frequency", col = "red")
 ```
 
-3. Calculate and report the mean and median of the total number of steps taken per day
+###3. Calculate and report the mean and median of the total number of steps taken per day
 ```{r histogram, echo=TRUE, fig.height=6, fig.width=8}
 #take the mean and median from the summed column
 stepDayMean <- mean(stepDay$steps_by_day)
+stepDayMean
 stepDayMedian <- median(stepDay$steps_by_day)
+stepDayMedian
 ```
-**The mean total number of steps taken per day**: 10766.1886792453  
-**The median total number of steps taken per day**: 10765   
+The mean total number of steps taken per day: 10766.1886792453  
+The median total number of steps taken per day: 10765   
 
 ## What is the average daily activity pattern?  
 
-1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)  
+###1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)  
 ```{r, echo=TRUE}
 #average number of steps taken (mean) within each interval
 stepInterval <- aggregate(list(stepMean=activity$steps), list(interval=activity$interval), mean, na.rm=TRUE)
@@ -72,18 +75,18 @@ stepInterval <- aggregate(list(stepMean=activity$steps), list(interval=activity$
 plot(stepInterval, type="l", xlab="5-min Interval", ylab="Av Num of Steps", main = "Average Number of Steps Taken", col = "blue")
 ```
 
-2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?  
+###2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?  
 ```{r, echo=TRUE}
 #sort the data frame
 stepIntervalOrdered <- arrange(stepInterval, desc(stepMean))
 #top of the data frame has the max number of steps
 stepIntervalOrdered[1,]
 ```
-**The maximum number of steps (on average 206.1698) is on Interval 835.**  
+The maximum number of steps (on average 206.1698) is on Interval 835.  
 
 ## Imputing missing values  
 
-1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)  
+###1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)  
 ```{r, echo=TRUE}
 #for each column, take sum of is.na()
 numNA <- sapply(activity, function(x) sum(is.na(x)))
@@ -91,9 +94,19 @@ numNA <- sapply(activity, function(x) sum(is.na(x)))
 numNA[[1]]
 ```
 Source for the code is [here](http://stackoverflow.com/questions/8317231/elegant-way-to-report-missing-values-in-a-data-frame)  
-**Total number of rows with NA:** 2304  
+Total number of rows with NA: 2304  
 
-2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.  
+###2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.  
+
+Strategy is to identify where the na values are, and then replace them with the corresponding interval's mean value.
+Those mean values were already stored in the *stepInterval* table.  
+
+We will need to do a for loop to traverse the original *activity* table. Each time a missing value is encountered, the 
+corresponding mean step value will need to be identified.  
+
+The missing values are then replaced with mean step value for that corresponding 5-minute interval.  
+
+###3. Create a new dataset that is equal to the original dataset but with the missing data filled in.  
 ```{r, echo=TRUE}
 #create new data frame
 activityImputed <- activity
@@ -115,14 +128,8 @@ for (i in 1:nrow(activity)){
 head(activity)
 head(activityImputed)
 ```
-The missing values are replaced with mean step value for the 5-minute interval.  
 
-3. Create a new dataset that is equal to the original dataset but with the missing data filled in.  
-```{r, echo=TRUE}
-
-```
-
-4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?  
+###4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?  
 ```{r, echo=TRUE}
 
 ```
