@@ -77,7 +77,7 @@ head(stepDay)
 hist(stepDay$steps_by_day, main="Number of Steps Taken Each Day", xlab="Number of Steps per Day", ylab="Frequency", col = "red")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
+![](PA1_template_files/figure-html/histogram1-1.png) 
 
 ###3. Calculate and report the mean and median of the total number of steps taken per day
 
@@ -113,7 +113,7 @@ stepInterval <- aggregate(list(stepMean=activity$steps), list(interval=activity$
 plot(stepInterval, type="l", xlab="5-min Interval", ylab="Av Num of Steps", main = "Average Number of Steps Taken", col = "blue")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-7-1.png) 
+![](PA1_template_files/figure-html/activity_pattern-1.png) 
 
 ###2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?  
 
@@ -215,7 +215,7 @@ stepDayI <- summarize(activityDayI, steps_by_day = sum(steps))
 hist(stepDayI$steps_by_day, main="Number of Steps Taken Each Day (imputed)", xlab="Number of Steps per Day", ylab="Frequency", col = "blue")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
+![](PA1_template_files/figure-html/histogram2-1.png) 
 
 ```r
 stepDayMeanI <- mean(stepDayI$steps_by_day)
@@ -308,7 +308,7 @@ g <- ggplot(data = stepDayTypeImputed, aes(x=interval,y=steps_by_interval)) +
 g
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-14-1.png) 
+![](PA1_template_files/figure-html/weekday_weekend_activity_pattern-1.png) 
 
 During the weekdays, steps are maximized during going to work and going back home hours.  
 During the weekends, steps are higher throughout the day.  
