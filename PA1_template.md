@@ -287,5 +287,29 @@ str(activityImputed)
 ##  $ dayType : Factor w/ 2 levels "Weekday","Weekend": 1 1 1 1 1 1 1 1 1 1 ...
 ```
 
-###2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.  
+###2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).  
 
+```r
+#import ggplot library
+library(ggplot2)
+```
+
+```r
+#group the activityImputed table by day type and interval
+activityDayTypeImputed <- group_by(activityImputed, dayType, interval)
+#summarize this grouped table with the mean of steps for each day type and interval
+stepDayTypeImputed <- summarize(activityDayTypeImputed, steps_by_interval = mean(steps))
+#create a ggplot object that shows weekdays and weekends on separate line graphs 
+g <- ggplot(data = stepDayTypeImputed, aes(x=interval,y=steps_by_interval)) + 
+    geom_line() + 
+    facet_grid(dayType~.) + 
+    xlab("Interval") + 
+    ylab("Number of Steps")
+g
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-14-1.png) 
+
+During the weekdays, steps are maximized during going to work and going back home hours.  
+During the weekends, steps are higher throughout the day.  
+From the findings, one could infer mostly sitting during work hours, and average activities during weekends.  
