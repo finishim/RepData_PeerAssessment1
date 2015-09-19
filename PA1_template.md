@@ -206,5 +206,15 @@ head(activityImputed)
 
 ###4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?  
 
+```r
+#group the activity table by day
+activityDayI <- group_by(activityImputed, date)
+#summarize this grouped table with the sum of steps for each day
+stepDayI <- summarize(activityDayI, steps_by_day = sum(steps))
+#create the histogram
+hist(stepDay$steps_by_day, main="Number of Steps Taken Each Day", xlab="Number of Steps per Day", ylab="Frequency", col = "blue")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
 
 ## Are there differences in activity patterns between weekdays and weekends?  
